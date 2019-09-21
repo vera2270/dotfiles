@@ -1,8 +1,18 @@
+################################################################################
+# i3
+
 set $mod Mod4
 
-font pango:DejaVu Sans Mono 10
+font Noto Display 11
 
-# Use Mouse+$mod to drag floating windows to their wanted position
+gaps inner 8
+gaps outer -4
+
+default_border pixel 0
+
+################################################################################
+# windows
+
 floating_modifier $mod
 
 bindsym $mod+Shift+W kill
@@ -17,6 +27,8 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Home move workspace to output left
+bindsym $mod+Shift+End move workspace to output right
 
 bindsym $mod+h split h
 bindsym $mod+v split v
@@ -25,52 +37,10 @@ bindsym $mod+f fullscreen toggle
 
 bindsym $mod+s layout stacking
 bindsym $mod+a layout tabbed
-#bindsym $mod+Shift+e layout toggle split
 
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+q focus parent
-
-################################################################################
-# workspaces
-
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
-
-# switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
-
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
-
-bindsym $mod+Shift+c reload
-bindsym $mod+Shift+r restart
 
 mode "resize" {
 	bindsym Left resize shrink width 5 px or 2 ppt
@@ -96,47 +66,66 @@ mode "move" {
 
 bindsym $mod+m mode "move" 
 
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-exec_always --no-startup-id compton -b --config .config/compton/compton.conf
+################################################################################
+# workspaces
 
-gaps inner 8
-gaps outer -4
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
 
-default_border pixel 0
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
 
-client.focused          #6eaafb     #000000     #FFFFFF     #000000     #000000
-client.focused_inactive #222222    #5F676A    #FFFFFF    #5F676A    #5F676A
-client.unfocused        #333333   #222222   #888888   #222222   #333333
-client.urgent           #222222      #900000      #FFFFFF      #900000      #222222
-client.placeholder      #000000 #0C0C0C #FFFFFF #0C0C0C #000000
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
 
-client.background       #000000
+################################################################################
+# colors
 
-# Wallpaper
-exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper/slipknot.png
+set $fg     #D8DEE9
+set $fg_alt #D8DEE9
+set $bg     #00101010
+set $bg_alt #00606060
+
+# class                 border  backgr. text indicator child_border
+client.focused          $fg     $bg_alt $fg  $bg       $bg
+client.focused_inactive $fg     $bg_alt $fg  $bg       $bg
+client.unfocused        $fg     $bg     $fg  $bg       $bg
+client.urgent           $fg     $bg     $fg  $bg       $bg
+client.placeholder      $fg     $bg     $fg  $bg       $bg
+
+################################################################################
+# keybindings
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle #mute
-
-# bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
-# bindsym XF86AudioNext exec --no-startup-id playerctl next
-# bindsym XF86AudioPrev exec --no-startup-id playerctl previous
-
-# bindsym $mod+e exec i3-sensible-terminal -e ranger 
-
-
-# Lock screen
-#exec --no-startup-id xautolock -time 10 -locker 'i3lock -i ~/Pictures/space.png -t' -corners +00-
-#bindsym $mod+l exec --no-startup-id i3lock -i ~/Pictures/space.png -t
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-#bar {
-#	status_command i3status
-#	font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-#	font pango:DejaVu Sans Mono 10
-#}
 
 {{if eq .chezmoi.hostname "martin-x360"}}
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5
@@ -146,17 +135,23 @@ bindsym Ctrl+XF86MonBrightnessDown exec xbacklight -dec 1
 {{end}}
 
 bindsym Print --release exec "scrot -s /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
+bindsym Shift+Print --release exec "scrot /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
 
 bindsym $mod+B move scratchpad
 bindsym $mod+N scratchpad show
 
-# exec_always --no-startup-id nm-applet
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+e exec i3-sensible-terminal -e ranger
+bindsym $mod+F1 exec i3-sensible-terminal -t QALC -- qalc
+bindsym XF86Calculator exec i3-sensible-terminal -t QALC -- qalc
+
+################################################################################
+# startup
+
+exec_always --no-startup-id feh --bg-fill ~/Pictures/wallpaper/mountains.jpeg
+exec_always --no-startup-id nm-applet
+exec_always --no-startup-id ~/.config/compton/launch.sh
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 for_window [title="POPUP"] floating enable
 bindsym $mod+Shift+O exec i3-sensible-terminal -e ~/Desktop/latex-popup/run.sh --title POPUP
-
-
-bindsym $mod+Return exec i3-sensible-terminal
-
-bindsym $mod+F1 exec i3-sensible-terminal -t QALC -- qalc
-bindsym XF86Calculator exec i3-sensible-terminal -t QALC -- qalc

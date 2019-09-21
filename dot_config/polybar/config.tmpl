@@ -1,149 +1,82 @@
-[bar/primary]
-background = #D93d3c3b
-foreground = #b6a49b
-
-bottom = true
-width = 100%
-height = 2.5%
-
-line-size = 2.5
-border-size = 0
-
-padding-left = 0
-padding-right = 1
-
-module-margin-left = 1
-module-margin-right = 1
-
-font-0 = "Noto Display:style=Light:size=11"
-font-1 = "MaterialIcons:size=11"
-
-modules-left = i3 xkeyboard
-modules-center = 
-{{if eq .chezmoi.hostname "martin-x360"}}
-modules-right = wireless-network battery backlight pulseaudio temperature cpu date
-{{else if eq .chezmoi.hostname "martin-PC"}}
-modules-right = pulseaudio cpu date
-{{end}}
-
-tray-position = none
-tray-maxsize = 24
-tray-detached = false
-tray-transparent = false
-tray-padding = 2
-tray-scale = 1.0
-
-;wm-restack = i3
-;override-redirect = true
-
-[module/backlight]
-type = internal/xbacklight
-output = eDP1
-
-format = <label>
-label = %percentage:2%%
-
-{{if eq .chezmoi.hostname "martin-x360"}}
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = ADP1
-poll-interval = 1
-
-time-format = %H:%M
-
-format-charging = <label-charging><ramp-capacity>
-format-discharging = <label-discharging><ramp-capacity>
-format-full = <label-full><ramp-capacity>
-
-label-charging = %time%|%consumption%W|%percentage:2%%
-label-discharging = %time%|%consumption%W|%percentage:2%%
-label-full = %percentage:2%%
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-{{end}}
-
-[module/i3]
-type = internal/i3
-
-label-mode = %mode%
-label-mode-padding = 2
-
-label-focused = %name%
-label-focused-padding = 2
-
-label-unfocused = %name%
-label-unfocused-padding = 2
-
-label-urgent = %name%
-label-urgent-padding = 2
-
-label-visible = %name%
-label-visible-padding = 2
-
-[module/date]
-type = internal/date
-date = %d.%m.%y
-time = %H:%M:%S
-label = %date% %time%
-
 [settings]
+compositing-background = over
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
 screenchange-reload = true
-;compositing-background = xor
-;compositing-background = screen
-;compositing-foreground = source
-;compositing-border = over
-
 
 [global/wm]
-margin-top = 5
-margin-bottom = 5
+margin-top = 0
+margin-bottom = 0
+fixed-center = true
 
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:45:...%
-label-padding = 10
+[colors]
+background = #000d0d0d
+background-alt = #300fdfdfd
+foreground = #D8DEE9
+foreground-alt = #D8DEE9
 
-[module/pulseaudio]
-type = internal/pulseaudio
+################################################################################
+# primary bar
 
-;label-muted = 
-;label-muted-foreground = #66
+[bar/primary]
+foreground = ${colors.foreground}
+background = ${colors.background}
 
-;format-volume = <label-volume><ramp-volume>
-;label-volume = %percentage:2%%
-;ramp-volume-0 = 
-;ramp-volume-1 = 
+width = 100%
+height = 2.4%
+line-size = 1
+padding-right = 5
+module-margin-right = 5
 
-[module/cpu]
-type = internal/cpu
-label =  %percentage:2%%
-interval = 0.5
+tray-position = right
 
-[module/wireless-network]
-type = internal/network
-{{if eq .chezmoi.hostname "martin-x360"}}
-interface = wlo1
-{{else if eq .chezmoi.hostname "martin-PC"}}
-interface = enp37s0
+font-0 = "Noto Display:style=Light:size=11;4"
+font-1 = "Iosevka Nerd Font:antialias=true:size=11;4"
+
+modules-left = i3
+modules-center = date
+modules-right = {{if eq .chezmoi.hostname "martin-x360"}} battery backlight {{end}} pulseaudio temperature cpu
+
+################################################################################
+# secondary bar (dual screen)
+
+{{if eq .chezmoi.hostname "martin-PC"}}
+[bar/secondary]
+monitor = DP-1
+
+foreground = ${colors.foreground}
+background = ${colors.background}
+
+width = 100%
+height = 2.4%
+line-size = 1
+padding-right = 5
+module-margin-right = 5
+
+tray-position = right
+
+font-0 = "Noto Display:style=Light:size=11;4"
+font-1 = "Iosevka Nerd Font:antialias=true:size=11;4"
+
+modules-left = i3
+modules-center = mpd
+modules-right = 
+
+include-file = ~/.config/polybar/modules/mpd.conf
 {{end}}
 
-label-connected = %downspeed:9%|%upspeed:9%|%local_ip%
-label-disconnected = 
+################################################################################
+# modules
 
-[module/temperature]
-type = internal/temperature
-thermal-zone = 3
+include-file = ~/.config/polybar/modules/i3.conf
+include-file = ~/.config/polybar/modules/cpu.conf
+include-file = ~/.config/polybar/modules/temperature.conf
+include-file = ~/.config/polybar/modules/date.conf
+include-file = ~/.config/polybar/modules/pulseaudio.conf
 
-label = %temperature-c%
-
-[module/xkeyboard]
-type = internal/xkeyboard
-
-; List of indicators to ignore
-blacklist-0 = num lock
-blacklist-1 = scroll lock
+{{if eq .chezmoi.hostname "martin-x360"}}
+include-file = ~/.config/polybar/modules/battery.conf
+include-file = ~/.config/polybar/modules/backlight.conf
+{{end}}
