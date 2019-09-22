@@ -153,5 +153,16 @@ exec_always --no-startup-id nm-applet
 exec_always --no-startup-id ~/.config/compton/launch.sh
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
+################################################################################
+# specific workspaces
+
+for_window [instance="station"] move container to workspace $ws4
+for_window [instance="Mail"] move container to workspace $ws4
+
+for_window [instance="gmpc"] move container to workspace $ws5
+
+################################################################################
+# misc
+
 for_window [title="POPUP"] floating enable
 bindsym $mod+Shift+O exec i3-sensible-terminal -e ~/Desktop/latex-popup/run.sh --title POPUP
