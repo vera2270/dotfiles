@@ -37,7 +37,7 @@ font-1 = "Iosevka Nerd Font:antialias=true:size=11;4"
 
 modules-left = i3
 modules-center = date
-modules-right = {{if eq .chezmoi.hostname "martin-x360"}} battery backlight {{end}} pulseaudio temperature cpu
+modules-right = {{if eq .chezmoi.hostname "martin-x360"}} battery backlight {{end}} pulseaudio temperature cpu memory
 
 ################################################################################
 # secondary bar (dual screen)
@@ -70,6 +70,7 @@ include-file = ~/.config/polybar/modules/mpd.conf
 
 include-file = ~/.config/polybar/modules/i3.conf
 include-file = ~/.config/polybar/modules/cpu.conf
+include-file = ~/.config/polybar/modules/memory.conf
 include-file = ~/.config/polybar/modules/temperature.conf
 include-file = ~/.config/polybar/modules/date.conf
 include-file = ~/.config/polybar/modules/pulseaudio.conf
