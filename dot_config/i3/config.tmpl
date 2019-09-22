@@ -149,6 +149,8 @@ bindsym {{if eq .chezmoi.hostname "martin-x360"}} $mod+F1 {{else}} XF86Calculato
 ################################################################################
 # startup
 
+exec_always --no-startup-id setxkbmap -layout de,gr -variant nodeadkeys, -option grp:caps_switch
+
 exec_always --no-startup-id feh --bg-fill ~/Pictures/wallpaper/mountains.jpeg
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id ~/.config/compton/launch.sh
