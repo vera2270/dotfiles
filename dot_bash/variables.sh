@@ -9,6 +9,7 @@ if CMD_AVAILABLE go; then
 fi
 
 export EDITOR=/usr/bin/nano
+export TERMINAL=/usr/bin/alacritty
 
 # enable colors in man
 export LESS_TERMCAP_mb=$'\E[01;31m'

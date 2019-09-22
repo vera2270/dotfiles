@@ -140,10 +140,11 @@ bindsym Shift+Print --release exec "scrot /tmp/screenshot-$(date +%F_%T).png -e 
 bindsym $mod+B move scratchpad
 bindsym $mod+N scratchpad show
 
-bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+e exec i3-sensible-terminal -e ranger
-bindsym $mod+F1 exec i3-sensible-terminal -t QALC -- qalc
-bindsym XF86Calculator exec i3-sensible-terminal -t QALC -- qalc
+set $terminal /usr/bin/alacritty
+
+bindsym $mod+Return exec $terminal
+bindsym $mod+e exec $terminal -e ranger
+bindsym {{if eq .chezmoi.hostname "martin-x360"}} $mod+F1 {{else}} XF86Calculator {{end}} exec $terminal -t QALC -e qalc
 
 ################################################################################
 # startup
