@@ -147,7 +147,7 @@ set $terminal /usr/bin/alacritty
 
 bindsym $mod+Return exec $terminal
 bindsym $mod+e exec $terminal -e ranger
-bindsym {{if eq .chezmoi.hostname "martin-x360"}} $mod+F1 {{else}} XF86Calculator {{end}} exec $terminal -t QALC -e qalc
+bindsym {{if eq .chezmoi.hostname "martin-x360"}} $mod+F1 {{else if eq .chezmoi.hostname "r8"}} XF86Search {{else}} XF86Calculator {{end}} exec $terminal -t QALC -e qalc
 
 ################################################################################
 # startup
