@@ -1,0 +1,7 @@
+{{if not (hasKey . "monitors")}}
+alacritty
+compton
+i3
+polybar
+chromium-flags.conf
+{{end}}

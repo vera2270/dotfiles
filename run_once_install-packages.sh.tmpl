@@ -1,13 +1,46 @@
 #!/bin/bash
 
-read -p "install missing packages (y/n)?" CONT
-if [ "$CONT" != "y" ]; then
+{{ $packages := list }}
+
+{{/* shell */}}
+{{ $packages = concat $packages ( list "fzf" "tmux" "bash-completion" ) }}
+
+{{/* essential utililties */}}
+{{ $packages = concat $packages ( list "htop" "nmon" "wget" "fd" "libqalculate" "vim" "nano" ) }}
+
+{{/* desktop stuff */}}
+{{ if hasKey . "monitors" }}
+    {{/* i3 */}}
+    {{ $packages = concat $packages ( list "i3-gaps" "i3lock-color" "compton" "polybar" "nerd-fonts-iosevka" "noto-fonts" ) }}
+    {{ $packages = concat $packages ( list "dmenu" "j4-dmenu-desktop" "feh" "scrot" "xclip" ) }}
+    {{ $packages = concat $packages ( list "alacritty" ) }}
+
+    {{/* media */}}
+    {{ $packages = concat $packages ( list "inkscape" "audacity" "gimp" "vlc" "pix" ) }}
+
+    {{/* coding */}}
+    {{ $packages = concat $packages ( list "code" ) }}
+
+    {{/* commandline */}}
+    {{ $packages = concat $packages ( list "imagemagick" ) }}
+
+    {{/* python */}}
+    {{ $packages = concat $packages ( list "python-numpy" "python-scipy" "python-matplotlib" "python-argcomplete" "autopep8" "python-pyserial" ) }}
+
+    {{/* misc */}}
+    {{ $packages = concat $packages ( list "thunderbird" "circuit-simulator" ) }}
+{{ end }}
+
+{{define "join"}}{{ range . -}}{{ print . }} {{ end }}{{end}}
+
+if pacman -Qi {{ template "join" $packages}} > /dev/null; then
     exit 0
 fi
 
-yay -S --needed fzf htop tmux nmon wget bash-completion fd
+read -p "there are missing pacakges, install ? [y/N] " -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+fi
 
-{{if .i3}}
-yay -S --needed i3-gaps i3lock-color compton dmenu feh noto-fonts scrot xclip alacritty
-yay -S --needed polybar j4-dmenu-desktop nerd-fonts-iosevka
-{{end}}
+
+yay -S --needed {{ template "join" $packages}}

@@ -6,7 +6,10 @@ set $mod Mod4
 font Noto Display 11
 
 gaps inner 8
-gaps outer -4
+gaps outer 4
+
+focus_wrapping no
+workspace_auto_back_and_forth yes
 
 default_border pixel 0
 
@@ -27,8 +30,11 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+{{ if ge (len .monitors) 2 -}}
 bindsym $mod+Shift+Home move workspace to output left
 bindsym $mod+Shift+End move workspace to output right
+{{ end -}}
 
 bindsym $mod+h split h
 bindsym $mod+v split v
@@ -120,8 +126,9 @@ client.placeholder      $fg     $bg     $fg  $bg       $bg
 ################################################################################
 # keybindings
 
-# needs HandlePowerKey=ignore
+# needs HandlePowerKey=ignore and HandleSuspendKey=ignore in /etc/systemd/logind.conf
 bindsym XF86PowerOff exec ~/.config/i3/lock.sh
+bindsym XF86Sleep exec ~/.config/i3/lock.sh
 
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
@@ -130,12 +137,12 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle #mute
 
-{{if eq .chezmoi.hostname "martin-x360"}}
+{{- if .is_laptop }}
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5
 bindsym Ctrl+XF86MonBrightnessUp exec xbacklight -inc 1
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 bindsym Ctrl+XF86MonBrightnessDown exec xbacklight -dec 1
-{{end}}
+{{- end }}
 
 bindsym Print --release exec "scrot -s /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
 bindsym Shift+Print --release exec "scrot /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
@@ -147,12 +154,19 @@ set $terminal /usr/bin/alacritty
 
 bindsym $mod+Return exec $terminal
 bindsym $mod+e exec $terminal -e ranger
-bindsym {{if eq .chezmoi.hostname "martin-x360"}} $mod+F1 {{else if eq .chezmoi.hostname "r8"}} XF86Search {{else}} XF86Calculator {{end}} exec $terminal -t QALC -e qalc
+
+{{ $qalckey := "XF86Calculator" -}}
+{{ if eq .chezmoi.hostname "martin-x360" -}}
+	{{ $qalckey = "XF86Calculator" -}}
+{{ else if eq .chezmoi.hostname "r8" -}}
+	{{ $qalckey = "XF86Search" -}}
+{{ end -}}
+bindsym {{$qalckey}} exec $terminal -t QALC -e qalc
 
 ################################################################################
 # startup
 
-exec_always --no-startup-id setxkbmap -layout de,gr -variant nodeadkeys, -option grp:caps_switch
+exec_always --no-startup-id setxkbmap -layout de,gr -variant nodeadkeys, -option grp:caps_switch grp_led:scroll kpdl:dot
 
 exec_always --no-startup-id feh --bg-fill ~/Pictures/wallpaper/mountains.jpeg
 exec_always --no-startup-id nm-applet

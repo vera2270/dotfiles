@@ -21,6 +21,8 @@ foreground-alt = #D8DEE9
 # primary bar
 
 [bar/primary]
+monitor = {{ index .monitors 0 }}
+
 foreground = ${colors.foreground}
 background = ${colors.background}
 
@@ -37,14 +39,14 @@ font-1 = "Iosevka Nerd Font:antialias=true:size=11;4"
 
 modules-left = i3
 modules-center = date
-modules-right = {{if eq .chezmoi.hostname "martin-x360"}} battery backlight {{end}} pulseaudio temperature cpu memory
+modules-right = {{ if .is_laptop -}} battery backlight {{ end -}} pulseaudio temperature cpu memory
 
+{{ if ge (len .monitors) 2 -}}
 ################################################################################
 # secondary bar (dual screen)
 
-{{if eq .screens "2"}}
 [bar/secondary]
-monitor = {{if eq .chezmoi.hostname "martin-PC"}}DP-1{{else if eq .chezmoi.hostname "r8"}}HDMI2{{end}}
+monitor = {{ index .monitors 1 }}
 
 foreground = ${colors.foreground}
 background = ${colors.background}
@@ -59,13 +61,10 @@ font-0 = "Noto Display:style=Light:size=11;4"
 font-1 = "Iosevka Nerd Font:antialias=true:size=11;4"
 
 modules-left = i3
-modules-center = {{if eq .chezmoi.hostname "martin-PC"}} mpd {{end}}
+modules-center = {{ if eq .chezmoi.hostname "martin-PC" -}} mpd {{- end }}
 modules-right = 
 
-{{if eq .chezmoi.hostname "martin-PC"}}
-include-file = ~/.config/polybar/modules/mpd.conf
-{{end}}
-{{end}}
+{{- end }}
 
 ################################################################################
 # modules
@@ -77,7 +76,11 @@ include-file = ~/.config/polybar/modules/temperature.conf
 include-file = ~/.config/polybar/modules/date.conf
 include-file = ~/.config/polybar/modules/pulseaudio.conf
 
-{{if eq .chezmoi.hostname "martin-x360"}}
+{{- if eq .chezmoi.hostname "martin-PC" }}
+include-file = ~/.config/polybar/modules/mpd.conf
+{{end}}
+
+{{- if .is_laptop }}
 include-file = ~/.config/polybar/modules/battery.conf
 include-file = ~/.config/polybar/modules/backlight.conf
 {{end}}

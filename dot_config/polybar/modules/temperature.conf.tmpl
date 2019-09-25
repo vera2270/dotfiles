@@ -15,10 +15,10 @@ label = %temperature-c%
 ramp-warn-foreground = #f00
 label-warn-foreground = #f00
 
-{{if eq .chezmoi.hostname "martin-x360"}}
+{{if eq .chezmoi.hostname "martin-x360" -}}
 thermal-zone = 3
-{{else if eq .chezmoi.hostname "martin-PC"}}
+{{else if eq .chezmoi.hostname "martin-PC" -}}
 hwmon-path = /sys/class/hwmon/hwmon0/temp1_input
-{{else if eq .chezmoi.hostname "r8"}}
+{{else if eq .chezmoi.hostname "r8" -}}
 thermal-zone = 3
 {{end}}
