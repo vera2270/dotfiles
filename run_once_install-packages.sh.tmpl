@@ -43,4 +43,4 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 
-yay -S --needed {{ template "join" $packages}}
+yay --norebuild --nocleanmenu --nodiffmenu --needed -S {{ template "join" $packages}}
