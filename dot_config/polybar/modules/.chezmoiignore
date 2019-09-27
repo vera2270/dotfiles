@@ -1,6 +1,6 @@
-{{ if ne .chezmoi.hostname "martin-PC" }}
+{{/* if ne .chezmoi.hostname "martin-PC" }}
 mpd.conf
-{{ end }}
+{{ end */}}
 
 {{ if not .is_laptop }}
 backlight.conf
