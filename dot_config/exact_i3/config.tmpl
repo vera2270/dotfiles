@@ -166,7 +166,7 @@ bindsym {{$qalckey}} exec $terminal -t QALC -e qalc
 ################################################################################
 # startup
 
-exec_always --no-startup-id setxkbmap -layout de,gr -variant nodeadkeys, -option grp:caps_switch grp_led:scroll kpdl:dot
+exec_always --no-startup-id setxkbmap -layout de,gr -variant nodeadkeys, -option grp:caps_switch grp_led:scroll kpdl:dot numpad:mac
 
 exec_always --no-startup-id feh --bg-fill ~/Pictures/wallpaper/mountains.jpeg
 exec_always --no-startup-id nm-applet
