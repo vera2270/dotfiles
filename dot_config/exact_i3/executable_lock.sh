@@ -2,6 +2,7 @@
 
 i3lock -e -f -B 1 \
     --clock --timecolor=ffffffff --datecolor=ffffffff \
+    --indicator \
     --ringcolor=505050ff --keyhlcolor=ffffffff \
     --linecolor=00000000 \
     --ringvercolor=00000000 --insidevercolor=00000000 --verifcolor=00000000 \
