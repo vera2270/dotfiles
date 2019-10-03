@@ -178,10 +178,10 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 ################################################################################
 # specific workspaces
 
-for_window [instance="station"] move container to workspace $ws4
-for_window [instance="Mail"] move container to workspace $ws4
+for_window [instance="station"] move --no-auto-back-and-forth container to workspace $ws4
+for_window [instance="Mail"] move --no-auto-back-and-forth container to workspace $ws4
 
-for_window [instance="gmpc"] move container to workspace $ws5
+for_window [instance="gmpc"] move --no-auto-back-and-forth container to workspace $ws5
 
 ################################################################################
 # misc
