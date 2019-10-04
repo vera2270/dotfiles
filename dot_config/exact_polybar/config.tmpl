@@ -39,7 +39,7 @@ font-1 = "Iosevka Nerd Font:antialias=true:size=11;4"
 
 modules-left = i3
 modules-center = date
-modules-right = {{ if .is_laptop -}} battery backlight {{ end -}} pulseaudio temperature cpu memory
+modules-right = {{ if .is_laptop -}} battery backlight {{ end -}} temperature cpu memory pulseaudio
 
 {{ if ge (len .monitors) 2 -}}
 ################################################################################
