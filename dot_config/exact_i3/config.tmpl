@@ -159,7 +159,7 @@ bindsym $mod+e exec $terminal -e ranger
 
 {{ $qalckey := "XF86Calculator" -}}
 {{ if eq .chezmoi.hostname "martin-x360" -}}
-	{{ $qalckey = "XF86Calculator" -}}
+	{{ $qalckey = "$mod+F1" -}}
 {{ else if eq .chezmoi.hostname "r8" -}}
 	{{ $qalckey = "XF86Search" -}}
 {{ end -}}
