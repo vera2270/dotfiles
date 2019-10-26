@@ -12,7 +12,7 @@
 {{ if hasKey . "monitors" }}
     {{/* i3 */}}
     {{ $packages = concat $packages ( list "i3-gaps" "i3lock-color-git" "compton" "polybar" "nerd-fonts-iosevka" "noto-fonts" ) }}
-    {{ $packages = concat $packages ( list "dmenu" "j4-dmenu-desktop" "feh" "scrot" "xclip" ) }}
+    {{ $packages = concat $packages ( list "dmenu" "j4-dmenu-desktop" "feh" "scrot" "xclip" "xorg-xbacklight" ) }}
     {{ $packages = concat $packages ( list "alacritty" ) }}
 
     {{/* media */}}
