@@ -21,19 +21,19 @@ floating_modifier $mod
 bindsym $mod+Shift+W kill
 bindsym $mod+d exec j4-dmenu-desktop
 
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
 bindsym $mod+Right focus right
 
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
 bindsym $mod+Shift+Right move right
 
 {{ if ge (len .monitors) 2 -}}
 bindsym $mod+Shift+Home move workspace to output left
-bindsym $mod+Shift+End move workspace to output right
+bindsym $mod+Shift+End  move workspace to output right
 {{ end -}}
 
 bindsym $mod+h split h
@@ -49,10 +49,15 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+q focus parent
 
 mode "resize" {
-	bindsym Left resize shrink width 5 px or 2 ppt
-	bindsym Down resize grow height 5 px or 2 ppt
-	bindsym Up resize shrink height 5 px or 2 ppt
-	bindsym Right resize grow width 5 px or 2 ppt
+	bindsym Left  resize shrink width  5 px or 2 ppt
+	bindsym Down  resize grow   height 5 px or 2 ppt
+	bindsym Up    resize shrink height 5 px or 2 ppt
+	bindsym Right resize grow   width  5 px or 2 ppt
+
+	bindsym Shift+Left  resize shrink width  20 px or 8 ppt
+	bindsym Shift+Down  resize grow   height 20 px or 8 ppt
+	bindsym Shift+Up    resize shrink height 20 px or 8 ppt
+	bindsym Shift+Right resize grow   width  20 px or 8 ppt
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
