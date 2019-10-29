@@ -86,27 +86,27 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
 
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
 
 ################################################################################
 # colors
@@ -175,17 +175,16 @@ exec_always --no-startup-id feh --bg-fill ~/Pictures/wallpaper/aleks-dahlberg-25
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id ~/.config/compton/launch.sh
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id ~/.config/i3/scripts/rename-workspaces.py --norenumber_workspaces --icon_list_format chemist
 
 ################################################################################
 # specific workspaces
 
-for_window [instance="station"] move --no-auto-back-and-forth container to workspace $ws4 {{- if ge (len .monitors) 2 }}, move workspace to output right {{- end }}
-for_window [instance="Mail"] move --no-auto-back-and-forth container to workspace $ws4 {{- if ge (len .monitors) 2 }}, move workspace to output right {{- end }}
+{{ $ws_move := "" }}
+{{ if ge (len .monitors) 2 -}}
+	{{ $ws_move = (print ", move workspace to output " (index .monitors 1)) -}}
+{{ end -}}
+for_window [instance="station"] move --no-auto-back-and-forth container to workspace number 4 {{- $ws_move }}
+for_window [instance="Mail"] move --no-auto-back-and-forth container to workspace number 4 {{- $ws_move }}
 
-for_window [instance="gmpc"] move --no-auto-back-and-forth container to workspace $ws5 {{- if ge (len .monitors) 2 }}, move workspace to output right {{- end }}
-
-################################################################################
-# misc
-
-for_window [title="POPUP"] floating enable
-bindsym $mod+Shift+O exec i3-sensible-terminal -e ~/Desktop/latex-popup/run.sh --title POPUP
+for_window [instance="gmpc"] move --no-auto-back-and-forth container to workspace number 5 {{- $ws_move }}
