@@ -56,6 +56,7 @@ WINDOW_ICONS = {
 
     # documents
     'evince': fa.icons['file-pdf'],
+    'xreader': fa.icons['file-pdf'],
     'libreoffice': fa.icons['file-alt'],
 
     # dev
