@@ -132,8 +132,12 @@ client.placeholder      $fg     $bg     $fg  $bg       $bg
 # keybindings
 
 # needs HandlePowerKey=ignore and HandleSuspendKey=ignore in /etc/systemd/logind.conf
-bindsym XF86PowerOff exec ~/.config/i3/lock.sh
-bindsym XF86Sleep exec ~/.config/i3/lock.sh
+{{- range (list "XF86PowerOff" "XF86Sleep") }}
+	bindsym {{ . }} exec ~/.config/i3/lock.sh
+	bindsym Shift+{{ . }} exec systemctl suspend
+	bindsym Ctrl+Shift+{{ . }} exec systemctl poweroff
+{{- end }}
+
 
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
