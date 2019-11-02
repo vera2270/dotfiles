@@ -4,7 +4,6 @@ killall -q polybar
 
 while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
 
-polybar primary &
-{{if ge (len .monitors) 2 -}}
-polybar secondary &
+{{ range .monitors }}
+polybar {{ . }} &
 {{end}}
