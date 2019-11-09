@@ -10,7 +10,7 @@ function run { $@ > /dev/null 2>&1 & disown > /dev/null 2>&1; }
 function killjobs { kill $(jobs -p); }
 
 # open new terminal window with optional directory
-function term { gnome-terminal --quiet --working-directory="$(realpath ${1:-$(pwd)})"; }
+function term { run alacritty --working-directory="$(realpath ${1:-$(pwd)})"; }
 
 # make new directory (can contain new subdirectories) and cd into it
 function mkcd { mkdir "$1" && cd "$1"; }

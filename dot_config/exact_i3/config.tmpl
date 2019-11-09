@@ -21,19 +21,19 @@ floating_modifier $mod
 bindsym $mod+Shift+W kill
 bindsym $mod+d exec j4-dmenu-desktop
 
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
 bindsym $mod+Right focus right
 
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
 bindsym $mod+Shift+Right move right
 
 {{ if ge (len .monitors) 2 -}}
 bindsym $mod+Shift+Home move workspace to output left
-bindsym $mod+Shift+End move workspace to output right
+bindsym $mod+Shift+End  move workspace to output right
 {{ end -}}
 
 bindsym $mod+h split h
@@ -49,10 +49,15 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+q focus parent
 
 mode "resize" {
-	bindsym Left resize shrink width 5 px or 2 ppt
-	bindsym Down resize grow height 5 px or 2 ppt
-	bindsym Up resize shrink height 5 px or 2 ppt
-	bindsym Right resize grow width 5 px or 2 ppt
+	bindsym Left  resize shrink width  5 px or 2 ppt
+	bindsym Down  resize grow   height 5 px or 2 ppt
+	bindsym Up    resize shrink height 5 px or 2 ppt
+	bindsym Right resize grow   width  5 px or 2 ppt
+
+	bindsym Shift+Left  resize shrink width  20 px or 8 ppt
+	bindsym Shift+Down  resize grow   height 20 px or 8 ppt
+	bindsym Shift+Up    resize shrink height 20 px or 8 ppt
+	bindsym Shift+Right resize grow   width  20 px or 8 ppt
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -86,27 +91,27 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
 
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
 
 ################################################################################
 # colors
@@ -127,8 +132,12 @@ client.placeholder      $fg     $bg     $fg  $bg       $bg
 # keybindings
 
 # needs HandlePowerKey=ignore and HandleSuspendKey=ignore in /etc/systemd/logind.conf
-bindsym XF86PowerOff exec ~/.config/i3/lock.sh
-bindsym XF86Sleep exec ~/.config/i3/lock.sh
+{{- range (list "XF86PowerOff" "XF86Sleep") }}
+	bindsym {{ . }} exec ~/.config/i3/power.sh lock
+	bindsym Ctrl+{{ . }} exec ~/.config/i3/power.sh suspend
+	bindsym Ctrl+Shift+{{ . }} exec ~/.config/i3/power.sh poweroff
+{{- end }}
+
 
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
@@ -175,17 +184,16 @@ exec_always --no-startup-id feh --bg-fill ~/Pictures/wallpaper/aleks-dahlberg-25
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id ~/.config/compton/launch.sh
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id ~/.config/i3/scripts/rename-workspaces.py --norenumber_workspaces --icon_list_format chemist
 
 ################################################################################
 # specific workspaces
 
-for_window [instance="station"] move --no-auto-back-and-forth container to workspace $ws4
-for_window [instance="Mail"] move --no-auto-back-and-forth container to workspace $ws4
+{{ $ws_move := "" }}
+{{ if ge (len .monitors) 2 -}}
+	{{ $ws_move = (print ", move workspace to output " (index .monitors 1)) -}}
+{{ end -}}
+for_window [instance="station"] move --no-auto-back-and-forth container to workspace number 4 {{- $ws_move }}
+for_window [instance="Mail"] move --no-auto-back-and-forth container to workspace number 4 {{- $ws_move }}
 
-for_window [instance="gmpc"] move --no-auto-back-and-forth container to workspace $ws5
-
-################################################################################
-# misc
-
-for_window [title="POPUP"] floating enable
-bindsym $mod+Shift+O exec i3-sensible-terminal -e ~/Desktop/latex-popup/run.sh --title POPUP
+for_window [instance="gmpc"] move --no-auto-back-and-forth container to workspace number 5 {{- $ws_move }}
