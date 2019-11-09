@@ -1,7 +1,3 @@
-{{/* if ne .chezmoi.hostname "martin-PC" }}
-mpd.conf
-{{ end */}}
-
 {{ if not .is_laptop }}
 backlight.conf
 battery.conf
