@@ -28,7 +28,7 @@
     {{ $packages = concat $packages ( list "python-numpy" "python-scipy" "python-matplotlib" "python-argcomplete" "autopep8" "python-pyserial" ) }}
 
     {{/* misc */}}
-    {{ $packages = concat $packages ( list "thunderbird" "circuit-simulator" ) }}
+    {{ $packages = concat $packages ( list "thunderbird" ) }}
 {{ end }}
 
 {{define "join"}}{{ range . -}}{{ print . }} {{ end }}{{end}}

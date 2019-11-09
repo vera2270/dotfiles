@@ -2,6 +2,7 @@
 
 pgrep i3lock || i3lock \
     -f -B 1 \
+    --image "/home/verap/Pictures/Wallpaper/911_S.png" \
     --clock --timecolor=ffffffff --datecolor=ffffffff \
     --indicator \
     --ringcolor=505050ff --keyhlcolor=ffffffff \
@@ -10,6 +11,6 @@ pgrep i3lock || i3lock \
     --ringwrongcolor=00000000 --insidewrongcolor=00000000 --wrongcolor=00000000 \
     --wrongtext="f*ck off!" --wrongsize=100 --wrongcolor=ffffffff \
     --pass-power-keys --pass-screen-keys \
-    {{ if eq .chezmoi.hostname "martin-PC" -}} --no-verify {{- else -}} --ignore-empty-password {{- end }}
+    --ignore-empty-password
 
 systemctl suspend
