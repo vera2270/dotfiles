@@ -177,6 +177,8 @@ bindsym {{$qalckey}} exec $terminal -t QALC -e qalc
 ################################################################################
 # startup
 
+exec --no-startup-id xrandr --output HDMI1 --primary --mode 1920x1080 --rotate normal --output HDMI2 --mode 1440x900 --rotate left --left-of HDMI1
+
 exec_always --no-startup-id setxkbmap -layout de,gr -variant nodeadkeys, -option grp:caps_switch grp_led:scroll kpdl:dot numpad:mac
 
 # background: https://triplelift.com/wp-content/uploads/2017/12/aleks-dahlberg-258314.jpg
