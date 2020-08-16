@@ -178,7 +178,7 @@ bindsym {{$qalckey}} exec $terminal -t QALC -e qalc
 # startup
 
 {{ if ge (len .monitors) 2 -}}
-exec --no-startup-id xrandr --output HDMI1 --primary --mode 1920x1080 --rotate normal --output HDMI2 --mode 1440x900 --rotate left --left-of HDMI1
+exec --no-startup-id xrandr --output HDMI1 --primary --mode 1920x1080 --rotate normal --output HDMI2 --mode 1920x1080 --rotate normal --left-of HDMI1
 {{ end -}}
 
 exec_always --no-startup-id setxkbmap -layout de,gr -variant nodeadkeys, -option grp:caps_switch grp_led:scroll kpdl:dot numpad:mac
